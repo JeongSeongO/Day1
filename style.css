@@ -159,6 +159,11 @@ body {
     font-weight: 350;
     margin-bottom: 2.5rem;
     word-break: keep-all;
+    transition: opacity 0.3s ease;
+}
+
+.subtitle.fade-out {
+    opacity: 0;
 }
 
 /* Divider Line */
@@ -166,6 +171,27 @@ body {
     height: 1px;
     background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
     margin-bottom: 2.5rem;
+}
+
+@property --btn-color-1 {
+    syntax: '<color>';
+    initial-value: #4f46e5;
+    inherits: false;
+}
+@property --btn-color-2 {
+    syntax: '<color>';
+    initial-value: #7c3aed;
+    inherits: false;
+}
+@property --btn-glow {
+    syntax: '<color>';
+    initial-value: rgba(99, 102, 241, 0.3);
+    inherits: false;
+}
+@property --btn-glow-hover {
+    syntax: '<color>';
+    initial-value: rgba(99, 102, 241, 0.5);
+    inherits: false;
 }
 
 /* Interactive Button */
@@ -180,14 +206,19 @@ body {
     font-size: 1rem;
     font-weight: 600;
     color: #ffffff;
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    background: linear-gradient(135deg, var(--btn-color-1) 0%, var(--btn-color-2) 100%);
     border: none;
     border-radius: 16px;
     cursor: pointer;
     overflow: hidden;
-    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3), 
+    box-shadow: 0 10px 20px var(--btn-glow), 
                 inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s ease, background 0.3s ease;
+    transition: --btn-color-1 0.6s ease,
+                --btn-color-2 0.6s ease,
+                --btn-glow 0.6s ease,
+                --btn-glow-hover 0.6s ease,
+                transform 0.2s cubic-bezier(0.2, 0, 0, 1), 
+                box-shadow 0.2s ease;
 }
 
 .action-btn::before {
@@ -207,7 +238,7 @@ body {
 
 .action-btn:hover {
     transform: scale(1.03);
-    box-shadow: 0 15px 30px rgba(99, 102, 241, 0.5), 
+    box-shadow: 0 15px 30px var(--btn-glow-hover), 
                 inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 

@@ -126,7 +126,28 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
-// Button Click Burst Effect
+// Message List for rotation
+const quotes = [
+    "오늘도 힘내세요!",
+    "당신의 도전을 마음 깊이 응원합니다.",
+    "포기하지 않는 당신의 모습이 가장 아름답습니다.",
+    "할 수 있어요, 조금 서툴고 느려도 괜찮습니다.",
+    "오늘 하루도 정말 수고 많으셨습니다.",
+    "가장 빛나는 별은 아직 뜨지 않았습니다."
+];
+let currentQuoteIndex = 0;
+
+// Button gradients corresponding to each quote
+const btnGradients = [
+    { start: "#ff7e5f", end: "#feb47b", glow: "rgba(255, 126, 95, 0.3)", glowHover: "rgba(255, 126, 95, 0.5)" }, // 오렌지/핑크 (따뜻함)
+    { start: "#06b6d4", end: "#3b82f6", glow: "rgba(6, 182, 212, 0.3)", glowHover: "rgba(6, 182, 212, 0.5)" }, // 시안/블루 (응원)
+    { start: "#ec4899", end: "#8b5cf6", glow: "rgba(236, 72, 153, 0.3)", glowHover: "rgba(236, 72, 153, 0.5)" }, // 핑크/퍼플 (아름다움)
+    { start: "#10b981", end: "#3b82f6", glow: "rgba(16, 185, 129, 0.3)", glowHover: "rgba(16, 185, 129, 0.5)" }, // 그린/블루 (성장)
+    { start: "#f59e0b", end: "#ef4444", glow: "rgba(245, 158, 11, 0.3)", glowHover: "rgba(245, 158, 11, 0.5)" }, // 옐로우/레드 (수고)
+    { start: "#1e3a8a", end: "#4f46e5", glow: "rgba(79, 70, 229, 0.3)", glowHover: "rgba(79, 70, 229, 0.5)" }  // 네이비/인디고 (별/우주)
+];
+
+// Button Click Burst Effect & Message Rotation
 const btn = document.getElementById('explore-btn');
 btn.addEventListener('click', () => {
     // Add temporary burst particles
@@ -152,6 +173,25 @@ btn.addEventListener('click', () => {
         };
         
         particlesArray.push(p);
+    }
+    
+    // Rotate messages with fade effect & Change button colors
+    const subtitle = document.querySelector('.subtitle');
+    if (subtitle) {
+        subtitle.classList.add('fade-out');
+        setTimeout(() => {
+            subtitle.textContent = quotes[currentQuoteIndex];
+            
+            // Set dynamic button gradient styles
+            const gradient = btnGradients[currentQuoteIndex];
+            btn.style.setProperty('--btn-color-1', gradient.start);
+            btn.style.setProperty('--btn-color-2', gradient.end);
+            btn.style.setProperty('--btn-glow', gradient.glow);
+            btn.style.setProperty('--btn-glow-hover', gradient.glowHover);
+
+            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+            subtitle.classList.remove('fade-out');
+        }, 300);
     }
     
     // Smooth card pop animation on click
